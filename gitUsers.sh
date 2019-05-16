@@ -1,10 +1,10 @@
-#                   ::::::::          
-#         :+:      :+:    :+:         
-#    +++++++++++  +:+         +++++   
-#       +:+      +#+         +#  +#   
-#      +#+      +#+         +#        
-#     #+#      #+#     +#  +#  +#     
-#    ###       ########+   ####+      
+#                   ::::::::
+#         :+:      :+:    :+:
+#    +++++++++++  +:+         +++++
+#       +:+      +#+         +#  +#
+#      +#+      +#+         +#
+#     #+#      #+#     +#  +#  +#
+#    ###       ########+   ####+
 #
 # tCc|MC_Crafty
 # mc_crafty@gmx.com
@@ -26,7 +26,7 @@ gitUsers_create() {
     user_email=$2
 
     if [ -n "$user_name" ]; then
-        user="$user_email¶$user_name" # Store the user as email¶name
+        user="$user_email""¶""$user_name" # Store the user as email¶name
         if [ -z `grep "¶$user_name$" $gitUsers_file` ]; then
             echo $user >> $gitUsers_file
             echo "Git user '$user_name' saved"
