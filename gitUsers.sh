@@ -27,7 +27,8 @@ gitUsers_create() {
 
     if [ -n "$user_name" ]; then
         user="$user_email""¶""$user_name" # Store the user as email¶name
-        if [ -z `grep "¶$user_name$" $gitUsers_file` ]; then
+        user_check=`grep "¶$user_name$" "$gitUsers_file"`
+        if [ -z "$user_check" ]; then
             echo $user >> $gitUsers_file
             echo "Git user '$user_name' saved"
         else
@@ -50,8 +51,8 @@ gitUsers_delete() {
     user_name=$1
 
     if [ -n "$user_name" ]; then
-        Users_check=`grep "¶$user_name$" "$gitUsers_file"`
-        if [ -z "$Users_check" ]; then
+        user_check=`grep "¶$user_name$" "$gitUsers_file"`
+        if [ -z "$user_check" ]; then
             echo "Can not find: '$user_name'"
         else
             user=`grep -v "¶$user_name$" "$gitUsers_file" | awk '{printf "%s¶%s╩",$1,$2}' FS=¶`
@@ -92,6 +93,23 @@ gitUsers_change() {
     else
         echo "Invalid name: '$user_name'"
     fi
+}
+
+# show current user from git config
+gitUsers_show_current() {
+    echo "Current Git user:"
+    echo
+    git config --get user.name
+    git config --get user.email
+}
+
+# create a git user entry from the current git config
+gitUsers_create_current() {
+
+    user_name_config="`git config --get user.name`"
+    user_email_config="`git config --get user.email`"
+
+    gitUsers_create "$user_name_config" "$user_email_config"
 }
 
 
